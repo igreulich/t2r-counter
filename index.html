@@ -15,12 +15,13 @@
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       function MainController($scope){
-        $scope.one   = 0;
-        $scope.two   = 0;
-        $scope.three = 0;
-        $scope.four  = 0;
-        $scope.five  = 0;
-        $scope.six   = 0;
+        $scope.one    = 0;
+        $scope.two    = 0;
+        $scope.three  = 0;
+        $scope.four   = 0;
+        $scope.five   = 0;
+        $scope.six    = 0;
+        $scope.routes = 0;
         
         $scope.calculate = function(){
           if ($scope.route){
@@ -35,7 +36,16 @@
             $scope.ticketsBonus = 0;
           };
           
-          $scope.total = $scope.one + ($scope.two * 2) + ($scope.three * 4) + ($scope.four * 7) + ($scope.five * 10) + ($scope.six * 15) + ($scope.routeBonus * 1) + ($scope.ticketsBonus * 1);
+          $scope.total = $scope.one + 
+                         $scope.two * 2 + 
+                         $scope.three * 4 + 
+                         $scope.four * 7 + 
+                         $scope.five * 10 + 
+                         $scope.six * 15 + 
+                         $scope.routeBonus + 
+                         $scope.ticketsBonus + 
+                         $scope.routes;
+
           return $scope.total;
         };
       };
@@ -96,6 +106,13 @@
                   <label class="control-label" for="trains6">6 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains6" ng-model="six">
+                  </div>
+                </div>
+                <p>Enter the number of points from your destination tickets</p>
+                <div class="control-group">
+                  <label class="control-label" for="trains6">Points from Routes</label>
+                  <div class="controls">
+                    <input type="number" id="trains6" ng-model="routes">
                   </div>
                 </div>
               </fieldset>

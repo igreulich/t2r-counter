@@ -21,6 +21,23 @@
         $scope.four  = 0;
         $scope.five  = 0;
         $scope.six   = 0;
+        
+        $scope.calculate = function(){
+          if ($scope.route){
+            $scope.routeBonus = 10;
+          }else{
+            $scope.routeBonus = 0;
+          };
+        
+          if ($scope.tickets){
+            $scope.ticketsBonus = 15;
+          }else{
+            $scope.ticketsBonus = 0;
+          };
+          
+          $scope.total = $scope.one + ($scope.two * 2) + ($scope.three * 4) + ($scope.four * 7) + ($scope.five * 10) + ($scope.six * 15) + ($scope.routeBonus * 1) + ($scope.ticketsBonus * 1);
+          return $scope.total;
+        };
       };
     </script>
   </head>
@@ -39,60 +56,65 @@
     </div>
     <div class="container" ng-controller="MainController">
       <div class="row-fluid">
-        <div class="span8 offset2">
+        <div class="span6 offset3">
           <div class="well">
-            <form class="form-horizontal">
+            <form class="form-horizontal" ng-submit="calculate()">
               <fieldset>
-                <legend class="pull-left">Point Calculator<span class="pull-right">Totals<span></legend>
-                <p class>Enter the number of routes you completed of each length</p>
-                <div class="control-group">
+                <legend>Point Calculator</legend>
+                <p>Enter the number of routes you completed of each length</p>
+                <div class="control-group ">
                   <label class="control-label" for="trains1">1 Train</label>
                   <div class="controls">
                     <input type="number" id="trains1" ng-model="one">
-                    <input type="text" class="pull-right" value="{{one}}" disabled>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="trains2">2 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains2" ng-model="two">
-                    <input type="text" class="pull-right" value="{{two * 2}}" disabled>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="trains3">3 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains3" ng-model="three">
-                    <input type="text" class="pull-right" value="{{three * 4}}" disabled>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="trains4">4 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains4" ng-model="four">
-                    <input type="text" class="pull-right" value="{{four * 7}}" disabled>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="trains5">5 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains5" ng-model="five">
-                    <input type="text" class="pull-right" value="{{five * 10}}" disabled>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label" for="trains6">6 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains6" ng-model="six">
-                    <input type="text" class="pull-right" value="{{six * 15}}" disabled>
                   </div>
                 </div>
               </fieldset>
+              <div class="controls">
+                <label class="checkbox">
+                  <input type="checkbox" ng-model="route"> Longest Route
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox" ng-model="tickets"> Most Complete Tickets
+                </label>
+              </div>
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary">Calculate Score</button>
+              </div>
             </form>
             <div class="clearfix"></div>
             <hr />
             <div class="center">
-              <h3>Total Score: {{one + (two * 2) + (three * 4) + (four * 7) + (five * 10) + (six * 15)}}</h3>
+              <h3>Total Score: {{total}}</h3>
             </div>
           </div>          
         </div>

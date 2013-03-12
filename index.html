@@ -21,6 +21,7 @@
         $scope.four   = 0;
         $scope.five   = 0;
         $scope.six    = 0;
+        $scope.eight  = 0;
         $scope.routes = 0;
         
         $scope.calculate = function(){
@@ -42,6 +43,7 @@
                          $scope.four * 7 + 
                          $scope.five * 10 + 
                          $scope.six * 15 + 
+                         $scope.eight * 21 
                          $scope.routeBonus + 
                          $scope.ticketsBonus + 
                          $scope.routes;
@@ -106,6 +108,12 @@
                   <label class="control-label" for="trains6">6 Trains</label>
                   <div class="controls">
                     <input type="number" id="trains6" ng-model="six">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="trains8">8 Trains</label>
+                  <div class="controls">
+                    <input type="number" id="trains8" ng-model="eight">
                   </div>
                 </div>
                 <p>Enter the number of points from your destination tickets</p>

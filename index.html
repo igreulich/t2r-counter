@@ -1,147 +1,158 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
   <head>
-    <title>Ticket 2 Ride Math!</title>
-    
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body{padding-top: 60px;}
-      .center{text-align: center;}
-    </style>
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <title>Ticket to Ride Counter</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      function MainController($scope){
-        $scope.one    = 0;
-        $scope.two    = 0;
-        $scope.three  = 0;
-        $scope.four   = 0;
-        $scope.five   = 0;
-        $scope.six    = 0;
-        $scope.eight  = 0;
-        $scope.routes = 0;
-        
+      var app = angular.module('T2RApp', []);
+
+      app.controller('MainController', function($scope) {
         $scope.calculate = function(){
+          var one    = parseNum($scope.one) || 0;
+          var two    = parseNum($scope.two) || 0;
+          var three  = parseNum($scope.three) || 0;
+          var four   = parseNum($scope.four) || 0;
+          var five   = parseNum($scope.five) || 0;
+          var six    = parseNum($scope.six) || 0;
+          var eight  = parseNum($scope.eight) || 0;
+          var routes = parseNum($scope.routes) || 0;
+          var routeBonus;
+          var ticketBonus;
+
           if ($scope.route){
-            $scope.routeBonus = 10;
+            routeBonus = 10;
           }else{
-            $scope.routeBonus = 0;
+            routeBonus = 0;
           };
-        
+
           if ($scope.tickets){
-            $scope.ticketsBonus = 15;
+            ticketsBonus = 15;
           }else{
-            $scope.ticketsBonus = 0;
+            ticketsBonus = 0;
           };
-          
-          $scope.total = $scope.one + 
-                         $scope.two * 2 + 
-                         $scope.three * 4 + 
-                         $scope.four * 7 + 
-                         $scope.five * 10 + 
-                         $scope.six * 15 + 
-                         $scope.eight * 21 
-                         $scope.routeBonus + 
-                         $scope.ticketsBonus + 
-                         $scope.routes;
+
+          $scope.total = one +
+                         two * 2 +
+                         three * 4 +
+                         four * 7 +
+                         five * 10 +
+                         six * 15 +
+                         eight * 21 +
+                         routeBonus +
+                         ticketsBonus +
+                         routes;
 
           return $scope.total;
         };
-      };
+
+        function parseNum(number) {
+          var parsed = parseInt(number, 10);
+
+          return isNaN(parsed) ? 0 : parsed;
+        }
+      });
     </script>
   </head>
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand">Ticket 2 Ride Counter</a>
+  <body ng-app="T2RApp" ng-controller="MainController" class="game welcome" id="app">
+    <header class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="logo-white"><img src="images/logo-white.png">
+              <h3>T2R</h3>
+            </div>
+          </div>
+          <div class="nav-wrapper col-md-6">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse" id="nav-collapse">
+                <ul class="nav navbar-nav">
+                  <li style="visibility:hidden;"><a href="#">Profile</a></li>
+                  <li style="visibility:hidden;"><a href="#">Sign In</a></li>
+                </ul>
+                <form>
+                  <input type="text" name="search" placeholder="Search" value="">
+                  <input type="image" src="images/icon-search.png" alt="Submit">
+                </form>
+              </div>
+            </nav>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="container" ng-controller="MainController">
-      <div class="row-fluid">
-        <div class="span6 offset3">
-          <div class="well">
-            <form class="form-horizontal" ng-submit="calculate()">
-              <fieldset>
-                <legend>Point Calculator</legend>
+    </header>
+    <div class="signin">
+      <div class="wrapper-signin">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+              <form class="form-horizontal" ng-submit="calculate()">
+                <h1>Point Calculator</h1>
                 <p>Enter the number of routes you completed of each length</p>
-                <div class="control-group ">
-                  <label class="control-label" for="trains1">1 Train</label>
-                  <div class="controls">
-                    <input type="number" id="trains1" ng-model="one">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains1">1 Train</label>
+                  <input class="form-control" type="text" id="trains1" placeholder="1 Train" ng-model="one">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains2">2 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains2" ng-model="two">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains2">2 Trains</label>
+                  <input class="form-control" type="text" id="trains2" placeholder="2 Trains" ng-model="two">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains3">3 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains3" ng-model="three">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains3">3 Trains</label>
+                  <input class="form-control" type="text" id="trains3" placeholder="3 Trains" ng-model="three">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains4">4 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains4" ng-model="four">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains4">4 Trains</label>
+                  <input class="form-control" type="text" id="trains4" placeholder="4 Trains" ng-model="four">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains5">5 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains5" ng-model="five">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains5">5 Trains</label>
+                  <input class="form-control" type="text" id="trains5" placeholder="5 Trains" ng-model="five">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains6">6 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains6" ng-model="six">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains6">6 Trains</label>
+                  <input class="form-control" type="text" id="trains6" placeholder="6 Trains" ng-model="six">
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="trains8">8 Trains</label>
-                  <div class="controls">
-                    <input type="number" id="trains8" ng-model="eight">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="trains8">8 Trains</label>
+                  <input class="form-control" type="text" id="trains8" placeholder="8 Trains" ng-model="eight">
                 </div>
                 <p>Enter the number of points from your destination tickets</p>
-                <div class="control-group">
-                  <label class="control-label" for="trains6">Points from Routes</label>
-                  <div class="controls">
-                    <input type="number" id="trains6" ng-model="routes">
-                  </div>
+                <div class="form-group">
+                  <label class="sr-only" for="routes">Points from routes</label>
+                  <input class="form-control" type="text" id="routes" placeholder="Points from routes" ng-model="routes">
                 </div>
-              </fieldset>
-              <div class="controls">
-                <label class="checkbox">
-                  <input type="checkbox" ng-model="route"> Longest Route
-                </label>
-                <label class="checkbox">
-                  <input type="checkbox" ng-model="tickets"> Most Complete Tickets
-                </label>
-              </div>
-              <div class="pull-right">
-                <button type="submit" class="btn btn-primary">Calculate Score</button>
-              </div>
-            </form>
-            <div class="clearfix"></div>
-            <hr />
-            <div class="center">
+                <div class="checkbox" id="checkbox-route">
+                  <label for="route">
+                    <input type="checkbox" id-"route" ng-model="route"> Longest Route
+                  </label>
+                </div>
+                <div class="checkbox" id="checkbox-tickets">
+                  <label for="tickets">
+                    <input type="checkbox" id="tickets" ng-model="tickets"> Most Complete Tickets
+                  </label>
+                </div>
+                <div class="signin-submit-wrapper">
+                  <button type="submit" class="signin-submit">Score</button>
+                </div>
+              </form>
+              <div class="clearfix"></div>
+              <hr />
               <h3>Total Score: {{total}}</h3>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
     </div>
